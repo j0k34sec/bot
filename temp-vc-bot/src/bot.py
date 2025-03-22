@@ -29,12 +29,15 @@ async def delete_vc(ctx):
     pass
 
 # Load command modules
-for filename in os.listdir('./commands'):
-    if filename.endswith('.py'):
-        bot.load_extension(f'commands.{filename[:-3]}')
+async def load_extensions():
+    for filename in os.listdir('./commands'):
+        if filename.endswith('.py'):
+            await bot.load_extension(f'commands.{filename[:-3]}')
 
 # Load token from config.json
 with open('config.json') as config_file:
     config = json.load(config_file)
 
+# Run the bot
+bot.loop.run_until_complete(load_extensions())
 bot.run(config['token'])

@@ -20,13 +20,20 @@ async def create_vc(ctx, name: str):
 
 @bot.command()
 async def claim(ctx):
-    # Logic for claiming the VC goes here
-    pass
+    if ctx.author.voice and ctx.author.voice.channel:
+        channel = ctx.author.voice.channel
+        await ctx.send(f'You have claimed the voice channel {channel.mention}!')
+    else:
+        await ctx.send('You need to be in a voice channel to claim it.')
 
 @bot.command()
 async def delete_vc(ctx):
-    # Logic for deleting the VC goes here
-    pass
+    if ctx.author.voice and ctx.author.voice.channel:
+        channel = ctx.author.voice.channel
+        await channel.delete()
+        await ctx.send(f'Temporary voice channel {channel.name} deleted!')
+    else:
+        await ctx.send('You need to be in a voice channel to delete it.')
 
 # Load command modules
 async def load_extensions():

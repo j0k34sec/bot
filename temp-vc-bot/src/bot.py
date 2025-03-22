@@ -1,5 +1,7 @@
 from discord.ext import commands
 import discord
+import json
+import os
 
 intents = discord.Intents.default()
 intents.voice_states = True
@@ -31,4 +33,8 @@ for filename in os.listdir('./commands'):
     if filename.endswith('.py'):
         bot.load_extension(f'commands.{filename[:-3]}')
 
-bot.run('YOUR_BOT_TOKEN')
+# Load token from config.json
+with open('config.json') as config_file:
+    config = json.load(config_file)
+
+bot.run(config['token'])
